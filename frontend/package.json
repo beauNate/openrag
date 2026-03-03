@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check && next lint",
+    "lint": "biome lint && next lint",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "knip": "knip",
@@ -63,6 +63,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.3.5",
     "@eslint/eslintrc": "^3",
+    "eslint": "^9.0.0",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0",
     "@playwright/test": "^1.57.0",
