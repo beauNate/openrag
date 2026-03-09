@@ -12,15 +12,17 @@ import type { Message, SelectedFilters } from "@/app/chat/_types/types";
 import OnboardingCard from "@/app/onboarding/_components/onboarding-card";
 import { useChat } from "@/contexts/chat-context";
 import { useChatStreaming } from "@/hooks/useChatStreaming";
+import { buildSearchPayloadFilters } from "@/lib/filter-normalization";
 
 import { OnboardingStep } from "./onboarding-step";
 import OnboardingUpload from "./onboarding-upload";
 
 // Filters for OpenRAG documentation
 const OPENRAG_DOCS_FILTERS: SelectedFilters = {
-  data_sources: ["openrag-documentation.pdf"],
+  data_sources: [],
   document_types: [],
   owners: [],
+  connector_types: ["system_default"],
 };
 
 export function OnboardingContent({
@@ -178,7 +180,9 @@ export function OnboardingContent({
         previousResponseId: responseId || undefined,
         // Send both filter_id and filters (selections)
         filter_id: filterToUse?.id,
-        filters: openragDocsFilterId ? OPENRAG_DOCS_FILTERS : undefined,
+        filters: openragDocsFilterId
+          ? buildSearchPayloadFilters(OPENRAG_DOCS_FILTERS)
+          : undefined,
       });
     }, 1500);
   };
