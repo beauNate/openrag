@@ -334,7 +334,7 @@ class SearchService:
                 "document_types": {"terms": {"field": "mimetype.keyword", "size": 10}},
                 "owners": {"terms": {"field": "owner_name.keyword", "size": 10}},
                 "connector_types": {"terms": {"field": "connector_type.keyword", "size": 10}},
-                "embedding_models": {"terms": {"field": "embedding_model.keyword", "size": 10}},
+                "embedding_models": {"terms": {"field": "embedding_model", "size": 10}},
             },
             "_source": [
                 "filename",
@@ -473,7 +473,10 @@ class SearchService:
             fallback_field = "chunk_embedding"
             legacy_search_body = copy.deepcopy(search_body)
             legacy_search_body.pop("min_score", None)
-            legacy_search_body["query"]["bool"]["filter"] = filter_clauses
+            legacy_search_body["query"]["bool"]["filter"] = [
+                *filter_clauses,
+                {"exists": {"field": fallback_field}},
+            ]
 
             knn_legacy = {
                 "knn": {
