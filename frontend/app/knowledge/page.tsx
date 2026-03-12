@@ -383,14 +383,13 @@ function SearchPage() {
     {
       cellRenderer: ({ data }: CustomCellRendererProps<File>) => {
         const status = data?.status || "active";
-        const connectorType = data?.connector_type;
-        if (status !== "active" || connectorType === "openrag_docs") {
+        if (status !== "active") {
           return null;
         }
         return (
           <KnowledgeActionsDropdown
             filename={data?.filename || ""}
-            connectorType={connectorType}
+            connectorType={data?.connector_type}
           />
         );
       },
